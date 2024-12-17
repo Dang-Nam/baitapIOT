@@ -1,10 +1,10 @@
-#XÂY DỰNG HỆ THỐNG IOT
+##XÂY DỰNG HỆ THỐNG IOT
 
-#HỌ TÊN: ĐẶNG PHƯƠNG NAM
+##HỌ TÊN: ĐẶNG PHƯƠNG NAM
 
-#MSSV: K215480106036
+##MSSV: K215480106036
 
-#LỚP: 57KMT.01
+##LỚP: 57KMT.01
 
 Bài 1: Xây dựng web hiển thị nhiệt độ, độ ẩm, áp suất, thông số joystic dùng Flask 
 
