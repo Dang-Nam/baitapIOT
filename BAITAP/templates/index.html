@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SensorHat Dashboard</title>
+    <style>
+        /* CSS cho giao diện */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .box {
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 10px;
+            width: 25%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #nameSection {
+            margin: 20px 0;
+        }
+    </style>
+    <script>
+        async function fetchSensorData() {
+            try {
+                const response = await fetch('/api/sensor_data');
+                const data = await response.json();
+                document.getElementById('temp').innerText = `Temperature: ${data.temperature.toFixed(2)} °C`;
+                document.getElementById('humidity').innerText = `Humidity: ${data.humidity.toFixed(2)} %`;
+                document.getElementById('pressure').innerText = `Pressure: ${data.pressure.toFixed(2)} hPa`;
+            } catch (error) {
+                console.error("Error fetching sensor data:", error);
+            }
+        }
+
+        async function fetchJoystickStatus() {
+            try {
+                const response = await fetch('/api/joystick');
+                const data = await response.json();
+                const joystickText = data.joystick.map(e => `${e.direction} (${e.action})`).join(', ');
+                document.getElementById('joystick').innerText = joystickText || "No action";
+            } catch (error) {
+                console.error("Error fetching joystick status:", error);
+            }
+        }
+
+        setInterval(() => {
+            fetchSensorData();
+            fetchJoystickStatus();
+        }, 2000);
+    </script>
+</head>
+<body>
+    <h1>SensorHat Dashboard</h1>
+
+    <!-- Khung hiển thị thông tin -->
+    <div class="container">
+        <div class="box" id="temperatureBox">
+            <h3>Temperature</h3>
+            <p id="temp">Loading...</p>
+        </div>
+        <div class="box" id="humidityBox">
+            <h3>Humidity</h3>
+            <p id="humidity">Loading...</p>
+        </div>
+        <div class="box" id="pressureBox">
+            <h3>Pressure</h3>
+            <p id="pressure">Loading...</p>
+        </div>
+        <div class="box" id="joystickBox">
+            <h3>Joystick</h3>
+            <p id="joystick">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Phần nhập liệu tên -->
+    <div id="nameSection">
+        <h3>Enter your name</h3>
+        <input type="text" id="nameInput">
+        <button onclick="displayName()">Display</button>
+        <p id="nameOutput"></p>
+    </div>
+
+    <script>
+        function displayName() {
+            const name = document.getElementById('nameInput').value;
+    document.getElementById('nameOutput').innerText = `Hello, ${name}!`;
+        }
+    </script>
+</body>
+</html>
